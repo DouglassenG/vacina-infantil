@@ -1,0 +1,7 @@
+{
+  "name": "vacina-infantil",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
