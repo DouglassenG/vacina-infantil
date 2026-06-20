@@ -11,6 +11,22 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./features/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },
+  {
+    path: 'child-profile',
+    loadChildren: () => import('./features/child-profile/child-profile.module').then( m => m.ChildProfilePageModule)
+  },
+  {
+    path: 'vaccine-history',
+    loadChildren: () => import('./features/vaccine-history/vaccine-history.module').then( m => m.VaccineHistoryPageModule)
+  },
+  {
+    path: 'campaigns',
+    loadChildren: () => import('./features/campaigns/campaigns.module').then( m => m.CampaignsPageModule)
+  },
 ];
 
 @NgModule({
