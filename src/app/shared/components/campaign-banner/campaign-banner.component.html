@@ -1,3 +1,12 @@
-<p>
-  campaign-banner works!
-</p>
+<ion-card class="campaign-card" color="warning">
+  <ion-card-header>
+    <ion-card-subtitle>Campanha Ativa</ion-card-subtitle>
+    <ion-card-title>{{ campaign.title }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <p>{{ campaign.description }}</p>
+    <p class="age-range">
+      Faixa etaria: {{ campaign.targetAgeMinMonths }} a {{ campaign.targetAgeMaxMonths }} meses
+    </p>
+  </ion-card-content>
+</ion-card>

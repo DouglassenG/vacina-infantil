@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Campaign } from '../../../core/models/campaign.model';
 
 @Component({
   selector: 'app-campaign-banner',
   templateUrl: './campaign-banner.component.html',
-  styleUrls: ['./campaign-banner.component.scss'],
+  styleUrls: ['./campaign-banner.component.scss']
 })
-export class CampaignBannerComponent  implements OnInit {
+export class CampaignBannerComponent {
 
-  constructor() { }
-
-  ngOnInit() {}
-
+  @Input() campaign!: Campaign;
 }
