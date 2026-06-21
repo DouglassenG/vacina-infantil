@@ -8,6 +8,7 @@ import { VaccineService } from '../../core/services/vaccine.service';
 import { CampaignService } from '../../core/services/campaign.service';
 
 @Component({
+  standalone: false,
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss']

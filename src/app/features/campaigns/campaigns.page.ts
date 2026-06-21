@@ -4,6 +4,7 @@ import { Campaign } from '../../core/models/campaign.model';
 import { CampaignService } from '../../core/services/campaign.service';
 
 @Component({
+  standalone: false,
   selector: 'app-campaigns',
   templateUrl: './campaigns.page.html',
   styleUrls: ['./campaigns.page.scss']

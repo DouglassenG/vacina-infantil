@@ -12,6 +12,7 @@ interface AgeGroup {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-vaccine-history',
   templateUrl: './vaccine-history.page.html',
   styleUrls: ['./vaccine-history.page.scss']

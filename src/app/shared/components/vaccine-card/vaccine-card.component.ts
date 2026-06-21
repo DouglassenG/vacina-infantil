@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { VaccineDoseModule } from '../../../core/models/vaccine.model';
 
 @Component({
+  standalone: false,
   selector: 'app-vaccine-card',
   templateUrl: './vaccine-card.component.html',
   styleUrls: ['./vaccine-card.component.scss']

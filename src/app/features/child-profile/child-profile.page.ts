@@ -4,6 +4,7 @@ import { Child } from '../../core/models/child.model';
 import { ChildService } from '../../core/services/child.service';
 
 @Component({
+  standalone: false,
   selector: 'app-child-profile',
   templateUrl: './child-profile.page.html',
   styleUrls: ['./child-profile.page.scss']
