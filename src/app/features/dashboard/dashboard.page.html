@@ -1,13 +1,68 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>dashboard</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Caderneta Digital</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">dashboard</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <app-child-selector></app-child-selector>
+
+  <div *ngIf="selectedChild">
+    <!-- Alerta de atraso -->
+    <ion-card *ngIf="hasDelayed" color="danger" class="alert-card">
+      <ion-card-content>
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        {{ selectedChild.name }} possui {{ atrasadas }} vacina(s) atrasada(s)!
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Info da crianca -->
+    <ion-card class="info-card">
+      <ion-card-content>
+        <h2>{{ selectedChild.name }}</h2>
+        <p>{{ selectedChild.formattedAge }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Contadores -->
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xs="12" size-md="4">
+          <ion-card class="counter-card">
+            <ion-card-content class="counter success">
+              <span class="counter-number">{{ concluidas }}</span>
+              <span class="counter-label">Concluidas</span>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size-xs="12" size-md="4">
+          <ion-card class="counter-card">
+            <ion-card-content class="counter warning">
+              <span class="counter-number">{{ agendadas }}</span>
+              <span class="counter-label">Agendadas</span>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size-xs="12" size-md="4">
+          <ion-card class="counter-card">
+            <ion-card-content class="counter danger">
+              <span class="counter-number">{{ atrasadas }}</span>
+              <span class="counter-label">Atrasadas</span>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Campanhas ativas -->
+    <div *ngIf="campaigns.length > 0">
+      <ion-list-header>
+        <ion-label>Campanhas Ativas</ion-label>
+      </ion-list-header>
+      <app-campaign-banner
+        *ngFor="let camp of campaigns"
+        [campaign]="camp"
+      ></app-campaign-banner>
+    </div>
+  </div>
 </ion-content>
