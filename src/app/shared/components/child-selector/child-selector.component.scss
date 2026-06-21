@@ -1,0 +1,31 @@
+.selector-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 0;
+  justify-content: center;
+}
+
+.child-chip {
+  cursor: pointer;
+  height: auto;
+  padding: 8px 12px;
+
+  ion-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  ion-label {
+    margin-left: 4px;
+
+    strong {
+      font-size: 14px;
+    }
+
+    p {
+      font-size: 12px;
+      margin: 0;
+    }
+  }
+}

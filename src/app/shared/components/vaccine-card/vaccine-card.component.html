@@ -1,3 +1,13 @@
-<p>
-  vaccine-card works!
-</p>
+<ion-card>
+  <ion-item lines="none">
+    <ion-label>
+      <h2><strong>{{ dose.vaccineName }}</strong></h2>
+      <p>Etapa: {{ dose.doseType }}</p>
+      <p>Recomendado: {{ dose.targetAgeMonths }} meses</p>
+      <p *ngIf="dose.lotNumber">Lote: {{ dose.lotNumber }}</p>
+    </ion-label>
+    <ion-badge [color]="statusColor" slot="end">
+      {{ statusLabel }}
+    </ion-badge>
+  </ion-item>
+</ion-card>

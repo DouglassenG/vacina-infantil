@@ -1,3 +1,16 @@
-<p>
-  child-selector works!
-</p>
+<div class="selector-container">
+  <ion-chip
+    *ngFor="let child of children"
+    [color]="selectedChild?.id === child.id ? 'primary' : 'medium'"
+    (click)="onSelectChild(child)"
+    class="child-chip"
+  >
+    <ion-avatar>
+      <img [src]="child.photoUrl" [alt]="child.name" />
+    </ion-avatar>
+    <ion-label>
+      <strong>{{ child.name }}</strong>
+      <p>{{ child.formattedAge }}</p>
+    </ion-label>
+  </ion-chip>
+</div>
