@@ -1,5 +1,4 @@
 :root {
-  /* Cores Obrigatórias do Desafio */
   --ion-color-primary: #473C33;
   --ion-color-primary-rgb: 71,60,51;
   --ion-color-primary-contrast: #ffffff;
@@ -28,13 +27,16 @@
   --ion-color-danger-shade: #df935c;
   --ion-color-danger-tint: #fdb078;
 
-  /* Fundo da Aplicação */
   --ion-background-color: #fafbfc;
   --ion-item-background: #ffffff;
+
+  --ion-text-color: #473C33;
+  --ion-text-color-rgb: 71,60,51;
 }
 
 body {
   background-color: #fafbfc !important;
+  color: #473C33;
 }
 
 ion-content {
@@ -43,4 +45,10 @@ ion-content {
 
 ion-card {
   --background: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+ion-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(71, 60, 51, 0.12);
 }

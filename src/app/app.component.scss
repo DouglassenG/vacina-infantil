@@ -1,17 +1,30 @@
 ion-menu {
+  --ion-background-color: #ffffff;
+
+  ion-content {
+    --background: #ffffff;
+  }
+
   ion-item {
     --padding-start: 16px;
+    --color: #473C33;
     border-radius: 8px;
     margin: 4px 8px;
+    transition: background-color 0.2s ease;
 
     &.selected {
-      --background: rgba(71, 60, 51, 0.1);
+      --background: rgba(171, 194, 112, 0.15);
       font-weight: 600;
+      border-left: 3px solid #ABC270;
     }
 
     ion-icon {
-      color: var(--ion-color-primary);
+      color: #473C33;
       margin-right: 12px;
+    }
+
+    ion-label {
+      color: #473C33;
     }
   }
 }
