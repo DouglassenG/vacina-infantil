@@ -1,13 +1,42 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>campaigns</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Campanhas de Vacinacao</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">campaigns</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-list-header>
+    <ion-label>Todas as Campanhas</ion-label>
+  </ion-list-header>
+
+  <ion-card *ngFor="let camp of campaigns" class="campaign-item"
+    [class.active]="camp.isActive"
+    [class.inactive]="!camp.isActive"
+  >
+    <ion-card-header>
+      <ion-card-subtitle>
+        <ion-badge [color]="camp.isActive ? 'success' : 'medium'">
+          {{ camp.isActive ? 'Ativa' : 'Encerrada' }}
+        </ion-badge>
+      </ion-card-subtitle>
+      <ion-card-title>{{ camp.title }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ camp.description }}</p>
+      <p class="details">
+        Faixa etaria: {{ camp.targetAgeMinMonths }} a {{ camp.targetAgeMaxMonths }} meses
+      </p>
+      <p class="details">
+        Periodo: {{ camp.startDate | date:'dd/MM/yyyy' }} - {{ camp.endDate | date:'dd/MM/yyyy' }}
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="campaigns.length === 0" class="empty-state">
+    <ion-icon name="megaphone-outline"></ion-icon>
+    <p>Nenhuma campanha encontrada</p>
+  </div>
 </ion-content>

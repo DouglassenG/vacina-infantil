@@ -1,13 +1,54 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>child-profile</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil da Crianca</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">child-profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <app-child-selector></app-child-selector>
+
+  <div *ngIf="selectedChild" class="profile-container">
+    <ion-card class="profile-card">
+      <ion-card-content>
+        <div class="avatar-section">
+          <ion-avatar class="profile-avatar">
+            <img [src]="selectedChild.photoUrl" [alt]="selectedChild.name" />
+          </ion-avatar>
+        </div>
+
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <p>Nome</p>
+              <h2>{{ selectedChild.name }}</h2>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>
+              <p>Idade</p>
+              <h2>{{ selectedChild.formattedAge }}</h2>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>
+              <p>Genero</p>
+              <h2>{{ selectedChild.gender === 'M' ? 'Masculino' : 'Feminino' }}</h2>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>
+              <p>Data de Nascimento</p>
+              <h2>{{ selectedChild.birthDate | date:'dd/MM/yyyy' }}</h2>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

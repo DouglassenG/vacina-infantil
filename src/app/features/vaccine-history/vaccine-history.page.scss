@@ -1,0 +1,23 @@
+.alert-card {
+  border-radius: 12px;
+
+  ion-card-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #fff;
+
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+}
+
+.age-group {
+  margin-bottom: 16px;
+}
+
+.age-group-header {
+  margin: 12px 0 4px;
+}

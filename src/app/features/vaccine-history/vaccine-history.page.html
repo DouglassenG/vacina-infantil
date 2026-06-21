@@ -1,13 +1,40 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>vaccine-history</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Historico Vacinal</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">vaccine-history</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <app-child-selector></app-child-selector>
+
+  <div *ngIf="selectedChild">
+    <!-- Alerta de atraso -->
+    <ion-card *ngIf="hasDelayed" color="danger" class="alert-card">
+      <ion-card-content>
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        {{ selectedChild.name }} possui vacinas atrasadas!
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list-header>
+      <ion-label>Status Atual de {{ selectedChild.name }}</ion-label>
+    </ion-list-header>
+
+    <!-- Grupos por faixa etaria -->
+    <div *ngFor="let group of ageGroups" class="age-group">
+      <div class="age-group-header">
+        <ion-chip color="primary" outline="true">
+          <ion-label>{{ group.label }}</ion-label>
+        </ion-chip>
+      </div>
+
+      <app-vaccine-card
+        *ngFor="let dose of group.doses"
+        [dose]="dose"
+      ></app-vaccine-card>
+    </div>
+  </div>
 </ion-content>

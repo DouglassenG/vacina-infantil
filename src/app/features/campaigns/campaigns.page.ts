@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Campaign } from '../../core/models/campaign.model';
+import { CampaignService } from '../../core/services/campaign.service';
 
 @Component({
   selector: 'app-campaigns',
   templateUrl: './campaigns.page.html',
-  styleUrls: ['./campaigns.page.scss'],
+  styleUrls: ['./campaigns.page.scss']
 })
-export class CampaignsPage implements OnInit {
+export class CampaignsPage implements OnInit, OnDestroy {
 
-  constructor() { }
+  campaigns: Campaign[] = [];
+  private subscriptions: Subscription[] = [];
 
-  ngOnInit() {
+  constructor(private campaignService: CampaignService) {}
+
+  ngOnInit(): void {
+    const sub = this.campaignService.getAllCampaigns().subscribe(campaigns => {
+      this.campaigns = campaigns;
+    });
+    this.subscriptions.push(sub);
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
 }
