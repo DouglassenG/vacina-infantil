@@ -1,15 +1,16 @@
-<ion-toolbar color="primary">
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Caderneta Digital</ion-title>
-</ion-toolbar>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content class="ion-padding">
   <app-child-selector></app-child-selector>
 
   <div *ngIf="selectedChild">
-    <!-- Alerta de atraso -->
     <ion-card *ngIf="hasDelayed" color="danger" class="alert-card">
       <ion-card-content>
         <ion-icon name="alert-circle-outline"></ion-icon>
@@ -17,7 +18,6 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Info da crianca -->
     <ion-card class="info-card">
       <ion-card-content>
         <h2>{{ selectedChild.name }}</h2>
@@ -25,28 +25,27 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Contadores -->
     <ion-grid>
       <ion-row>
-        <ion-col size-xs="12" size-md="4">
-          <ion-card class="counter-card">
-            <ion-card-content class="counter success">
+        <ion-col size-xs="4" size-md="4">
+          <ion-card class="counter-card counter-success">
+            <ion-card-content class="counter">
               <span class="counter-number">{{ concluidas }}</span>
               <span class="counter-label">Concluidas</span>
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col size-xs="12" size-md="4">
-          <ion-card class="counter-card">
-            <ion-card-content class="counter warning">
+        <ion-col size-xs="4" size-md="4">
+          <ion-card class="counter-card counter-warning">
+            <ion-card-content class="counter">
               <span class="counter-number">{{ agendadas }}</span>
               <span class="counter-label">Agendadas</span>
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col size-xs="12" size-md="4">
-          <ion-card class="counter-card">
-            <ion-card-content class="counter danger">
+        <ion-col size-xs="4" size-md="4">
+          <ion-card class="counter-card counter-danger">
+            <ion-card-content class="counter">
               <span class="counter-number">{{ atrasadas }}</span>
               <span class="counter-label">Atrasadas</span>
             </ion-card-content>
@@ -55,7 +54,6 @@
       </ion-row>
     </ion-grid>
 
-    <!-- Campanhas ativas -->
     <div *ngIf="campaigns.length > 0">
       <ion-list-header>
         <ion-label>Campanhas Ativas</ion-label>

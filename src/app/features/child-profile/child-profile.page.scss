@@ -5,6 +5,7 @@
 
 .profile-card {
   border-radius: 12px;
+  border-top: 4px solid #ABC270;
 }
 
 .avatar-section {
@@ -16,6 +17,8 @@
 .profile-avatar {
   width: 100px;
   height: 100px;
+  border: 3px solid #ABC270;
+  border-radius: 50%;
 }
 
 ion-item {
@@ -23,13 +26,13 @@ ion-item {
 
   p {
     font-size: 12px;
-    color: #999;
+    color: rgba(71, 60, 51, 0.5);
     margin: 0;
   }
 
   h2 {
     font-size: 16px;
     font-weight: 600;
-    color: var(--ion-color-primary);
+    color: #473C33;
   }
 }

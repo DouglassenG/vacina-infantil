@@ -1,4 +1,4 @@
-<ion-card>
+<ion-card [class]="'status-' + dose.status.toLowerCase()">
   <ion-item lines="none">
     <ion-label>
       <h2><strong>{{ dose.vaccineName }}</strong></h2>

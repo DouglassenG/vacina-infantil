@@ -1,7 +1,26 @@
 ion-card {
   margin: 8px 0;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 6px rgba(71, 60, 51, 0.08);
+  border-left: 4px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &.status-concluida {
+    border-left-color: #ABC270;
+  }
+
+  &.status-atrasada {
+    border-left-color: #FDA769;
+  }
+
+  &.status-agendada {
+    border-left-color: #FEC868;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(71, 60, 51, 0.12);
+  }
 
   ion-item {
     --padding-start: 16px;
@@ -10,12 +29,12 @@ ion-card {
 
   h2 {
     font-size: 16px;
-    color: var(--ion-color-primary);
+    color: #473C33;
   }
 
   p {
     font-size: 13px;
-    color: #666;
+    color: rgba(71, 60, 51, 0.6);
     margin: 2px 0;
   }
 

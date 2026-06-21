@@ -17,17 +17,18 @@
 .info-card {
   border-radius: 12px;
   text-align: center;
+  border-top: 4px solid #473C33;
 
   h2 {
     font-size: 22px;
     font-weight: 700;
-    color: var(--ion-color-primary);
+    color: #473C33;
     margin: 0;
   }
 
   p {
     font-size: 14px;
-    color: #666;
+    color: rgba(71, 60, 51, 0.6);
     margin: 4px 0 0;
   }
 }
@@ -35,25 +36,38 @@
 .counter-card {
   border-radius: 12px;
   margin: 4px 0;
+
+  &.counter-success {
+    border-top: 3px solid #ABC270;
+  }
+
+  &.counter-warning {
+    border-top: 3px solid #FEC868;
+  }
+
+  &.counter-danger {
+    border-top: 3px solid #FDA769;
+  }
 }
 
 .counter {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px 8px;
+  padding: 12px 4px;
 }
 
 .counter-number {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
 }
 
-.counter-label {
-  font-size: 13px;
-  margin-top: 4px;
-}
+.counter-success .counter-number { color: #ABC270; }
+.counter-warning .counter-number { color: #FEC868; }
+.counter-danger .counter-number { color: #FDA769; }
 
-.counter.success .counter-number { color: var(--ion-color-success); }
-.counter.warning .counter-number { color: var(--ion-color-warning); }
-.counter.danger .counter-number { color: var(--ion-color-danger); }
+.counter-label {
+  font-size: 12px;
+  margin-top: 4px;
+  color: rgba(71, 60, 51, 0.6);
+}
