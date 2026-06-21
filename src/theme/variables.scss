@@ -32,3 +32,15 @@
   --ion-background-color: #fafbfc;
   --ion-item-background: #ffffff;
 }
+
+body {
+  background-color: #fafbfc !important;
+}
+
+ion-content {
+  --background: #fafbfc;
+}
+
+ion-card {
+  --background: #ffffff;
+}
