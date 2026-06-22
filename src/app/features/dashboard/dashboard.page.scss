@@ -1,15 +1,18 @@
 .alert-card {
   border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(253, 167, 105, 0.2);
 
   ion-card-content {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-weight: 600;
+    font-size: 14px;
     color: #fff;
 
     ion-icon {
-      font-size: 24px;
+      font-size: 22px;
+      flex-shrink: 0;
     }
   }
 }
@@ -18,17 +21,29 @@
   border-radius: 12px;
   text-align: center;
   border-top: 4px solid #473C33;
+  box-shadow: 0 2px 10px rgba(71, 60, 51, 0.08);
+
+  .info-icon {
+    margin-bottom: 8px;
+
+    ion-icon {
+      font-size: 40px;
+      color: #473C33;
+    }
+  }
 
   h2 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: #473C33;
     margin: 0;
+    letter-spacing: 0.3px;
   }
 
   p {
-    font-size: 14px;
-    color: rgba(71, 60, 51, 0.6);
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(71, 60, 51, 0.55);
     margin: 4px 0 0;
   }
 }
@@ -36,6 +51,7 @@
 .counter-card {
   border-radius: 12px;
   margin: 4px 0;
+  box-shadow: 0 2px 10px rgba(71, 60, 51, 0.06);
 
   &.counter-success {
     border-top: 3px solid #ABC270;
@@ -54,12 +70,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 4px;
+  padding: 10px 4px;
+}
+
+.counter-icon {
+  font-size: 22px;
+  margin-bottom: 4px;
+
+  &.success-icon { color: #ABC270; }
+  &.warning-icon { color: #FEC868; }
+  &.danger-icon { color: #FDA769; }
 }
 
 .counter-number {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .counter-success .counter-number { color: #ABC270; }
@@ -67,12 +93,63 @@
 .counter-danger .counter-number { color: #FDA769; }
 
 .counter-label {
-  font-size: 12px;
-  margin-top: 4px;
-  color: rgba(71, 60, 51, 0.6);
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 2px;
+  color: rgba(71, 60, 51, 0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0 4px;
+
+  .section-icon {
+    font-size: 20px;
+    color: #473C33;
+  }
+
+  ion-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #473C33;
+  }
 }
 
 .skeleton-card {
   border-radius: 12px;
   margin: 8px 0;
+}
+
+// Responsividade
+@media (max-width: 576px) {
+  .info-card {
+    .info-icon ion-icon { font-size: 32px; }
+    h2 { font-size: 18px; }
+    p { font-size: 12px; }
+  }
+
+  .counter-icon { font-size: 18px; }
+  .counter-number { font-size: 22px; }
+  .counter-label { font-size: 10px; }
+
+  .section-header {
+    .section-icon { font-size: 18px; }
+    ion-label { font-size: 14px; }
+  }
+}
+
+@media (min-width: 768px) {
+  .info-card {
+    .info-icon ion-icon { font-size: 44px; }
+    h2 { font-size: 22px; }
+    p { font-size: 14px; }
+  }
+
+  .counter-icon { font-size: 26px; }
+  .counter-number { font-size: 30px; }
+  .counter-label { font-size: 12px; }
 }
