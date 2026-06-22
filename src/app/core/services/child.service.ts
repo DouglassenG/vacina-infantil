@@ -8,7 +8,10 @@ import {
   collectionData,
   query,
   where,
-  addDoc
+  addDoc,
+  doc,
+  updateDoc,
+  deleteDoc
 } from '@angular/fire/firestore';
 
 @Injectable({ providedIn: 'root' })
@@ -27,12 +30,12 @@ export class ChildService {
     const childrenRef = collection(this.firestore, 'children');
     const q = query(childrenRef, where('parentId', '==', parentId));
     return collectionData(q, { idField: 'id' }).pipe(
-      map((docs: any[]) => docs.map(doc => new Child({
-        id: doc.id,
-        name: doc.name,
-        birthDate: doc.birthDate?.toDate ? doc.birthDate.toDate() : new Date(doc.birthDate),
-        gender: doc.gender,
-        photoUrl: doc.photoUrl
+      map((docs: any[]) => docs.map(d => new Child({
+        id: d.id,
+        name: d.name,
+        birthDate: d.birthDate?.toDate ? d.birthDate.toDate() : new Date(d.birthDate),
+        gender: d.gender,
+        photoUrl: d.photoUrl
       })))
     );
   }
@@ -46,5 +49,15 @@ export class ChildService {
       gender: childData.gender,
       photoUrl: childData.photoUrl || 'assets/shapes/default-avatar.svg'
     }).then(() => {});
+  }
+
+  public updateChild(childId: string, data: Partial<IChild>): Promise<void> {
+    const childRef = doc(this.firestore, 'children', childId);
+    return updateDoc(childRef, { ...data });
+  }
+
+  public deleteChild(childId: string): Promise<void> {
+    const childRef = doc(this.firestore, 'children', childId);
+    return deleteDoc(childRef);
   }
 }

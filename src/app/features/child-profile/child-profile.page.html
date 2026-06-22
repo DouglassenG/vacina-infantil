@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Perfil da Crianca</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="toggleForm()">
+      <ion-button (click)="showForm ? closeForm() : openAddForm()">
         <ion-icon [name]="showForm ? 'close' : 'add'" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -15,16 +15,16 @@
 <ion-content class="ion-padding">
   <app-child-selector></app-child-selector>
 
-  <!-- Formulario de cadastro -->
+  <!-- Formulario de cadastro / edicao -->
   <ion-card *ngIf="showForm" class="form-card">
     <ion-card-header>
-      <ion-card-title>Nova Crianca</ion-card-title>
+      <ion-card-title>{{ isEditing ? 'Editar Crianca' : 'Nova Crianca' }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
         <ion-label position="stacked">Nome</ion-label>
         <ion-input
-          [(ngModel)]="newChild.name"
+          [(ngModel)]="formChild.name"
           placeholder="Nome da crianca"
           type="text"
         ></ion-input>
@@ -33,14 +33,14 @@
       <ion-item>
         <ion-label position="stacked">Data de Nascimento</ion-label>
         <ion-input
-          [(ngModel)]="newChild.birthDate"
+          [(ngModel)]="formChild.birthDate"
           type="date"
         ></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Genero</ion-label>
-        <ion-select [(ngModel)]="newChild.gender" interface="popover">
+        <ion-select [(ngModel)]="formChild.gender" interface="popover">
           <ion-select-option value="M">Masculino</ion-select-option>
           <ion-select-option value="F">Feminino</ion-select-option>
         </ion-select>
@@ -50,11 +50,11 @@
         expand="block"
         color="success"
         (click)="saveChild()"
-        [disabled]="!newChild.name || !newChild.birthDate || saving"
+        [disabled]="!formChild.name || !formChild.birthDate || saving"
         class="save-button"
       >
         <ion-spinner *ngIf="saving" name="crescent"></ion-spinner>
-        <span *ngIf="!saving">Salvar</span>
+        <span *ngIf="!saving">{{ isEditing ? 'Atualizar' : 'Salvar' }}</span>
       </ion-button>
     </ion-card-content>
   </ion-card>
@@ -98,6 +98,31 @@
             </ion-label>
           </ion-item>
         </ion-list>
+
+        <!-- Botoes de acao -->
+        <div class="action-buttons">
+          <ion-button
+            expand="block"
+            color="warning"
+            fill="outline"
+            (click)="openEditForm()"
+            class="action-btn"
+          >
+            <ion-icon name="create-outline" slot="start"></ion-icon>
+            Editar
+          </ion-button>
+
+          <ion-button
+            expand="block"
+            color="danger"
+            fill="outline"
+            (click)="confirmDelete()"
+            class="action-btn"
+          >
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
+            Excluir
+          </ion-button>
+        </div>
       </ion-card-content>
     </ion-card>
   </div>
