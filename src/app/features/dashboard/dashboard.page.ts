@@ -19,6 +19,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   doses: VaccineDoseModule[] = [];
   campaigns: Campaign[] = [];
   hasDelayed = false;
+  loading = true;
 
   concluidas = 0;
   agendadas = 0;
@@ -36,6 +37,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     const childSub = this.childService.selectedChild$.subscribe(child => {
       this.selectedChild = child;
       if (child && child.id) {
+        this.loading = true;
         this.loadDoses(child.id, child.ageInMonths);
         this.loadCampaigns(child.ageInMonths);
       }
@@ -51,6 +53,7 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.agendadas = doses.filter(d => d.status === 'AGENDADA').length;
         this.atrasadas = doses.filter(d => d.status === 'ATRASADA').length;
         this.hasDelayed = this.atrasadas > 0;
+        this.loading = false;
       });
     this.subscriptions.push(dosesSub);
   }

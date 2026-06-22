@@ -10,7 +10,39 @@
 <ion-content class="ion-padding">
   <app-child-selector></app-child-selector>
 
-  <div *ngIf="selectedChild">
+  <!-- Loading Skeleton -->
+  <div *ngIf="loading">
+    <ion-card class="skeleton-card">
+      <ion-card-content style="text-align: center;">
+        <ion-skeleton-text [animated]="true" style="width: 40%; height: 24px; margin: 0 auto;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 30%; height: 14px; margin: 8px auto 0;"></ion-skeleton-text>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xs="4" *ngFor="let i of [1,2,3]">
+          <ion-card class="skeleton-card">
+            <ion-card-content style="text-align: center;">
+              <ion-skeleton-text [animated]="true" style="width: 50%; height: 32px; margin: 0 auto;"></ion-skeleton-text>
+              <ion-skeleton-text [animated]="true" style="width: 70%; height: 14px; margin: 8px auto 0;"></ion-skeleton-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-card class="skeleton-card">
+      <ion-card-content>
+        <ion-skeleton-text [animated]="true" style="width: 30%; height: 12px;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 80%; height: 18px; margin-top: 8px;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 60%; height: 14px; margin-top: 8px;"></ion-skeleton-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Conteudo real -->
+  <div *ngIf="selectedChild && !loading">
     <ion-card *ngIf="hasDelayed" color="danger" class="alert-card">
       <ion-card-content>
         <ion-icon name="alert-circle-outline"></ion-icon>

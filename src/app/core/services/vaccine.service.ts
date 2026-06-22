@@ -7,7 +7,9 @@ import {
   collection,
   collectionData,
   query,
-  where
+  where,
+  doc,
+  updateDoc
 } from '@angular/fire/firestore';
 
 @Injectable({ providedIn: 'root' })
@@ -19,19 +21,26 @@ export class VaccineService {
     const dosesRef = collection(this.firestore, 'vaccine_doses');
     const q = query(dosesRef, where('childId', '==', childId));
     return collectionData(q, { idField: 'id' }).pipe(
-      map((docs: any[]) => docs.map(doc => {
+      map((docs: any[]) => docs.map(d => {
         const dose = new VaccineDoseModule({
-          id: doc.id,
-          vaccineName: doc.vaccineName,
-          doseType: doc.doseType,
-          targetAgeMonths: doc.targetAgeMonths,
-          appliedDate: doc.appliedDate?.toDate ? doc.appliedDate.toDate() : (doc.appliedDate ? new Date(doc.appliedDate) : undefined),
+          id: d.id,
+          vaccineName: d.vaccineName,
+          doseType: d.doseType,
+          targetAgeMonths: d.targetAgeMonths,
+          appliedDate: d.appliedDate?.toDate ? d.appliedDate.toDate() : (d.appliedDate ? new Date(d.appliedDate) : undefined),
           status: 'AGENDADA',
-          lotNumber: doc.lotNumber
+          lotNumber: d.lotNumber
         });
         dose.evaluateStatus(childAgeMonths);
         return dose;
       }))
     );
+  }
+
+  public markAsApplied(doseId: string): Promise<void> {
+    const doseRef = doc(this.firestore, 'vaccine_doses', doseId);
+    return updateDoc(doseRef, {
+      appliedDate: new Date()
+    });
   }
 }

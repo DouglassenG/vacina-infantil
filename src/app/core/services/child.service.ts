@@ -1,13 +1,14 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, from } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Child } from '../models/child.model';
+import { Child, IChild } from '../models/child.model';
 import {
   Firestore,
   collection,
   collectionData,
   query,
-  where
+  where,
+  addDoc
 } from '@angular/fire/firestore';
 
 @Injectable({ providedIn: 'root' })
@@ -34,5 +35,16 @@ export class ChildService {
         photoUrl: doc.photoUrl
       })))
     );
+  }
+
+  public addChild(childData: IChild, parentId: string): Promise<void> {
+    const childrenRef = collection(this.firestore, 'children');
+    return addDoc(childrenRef, {
+      parentId,
+      name: childData.name,
+      birthDate: childData.birthDate,
+      gender: childData.gender,
+      photoUrl: childData.photoUrl || 'assets/shapes/default-avatar.svg'
+    }).then(() => {});
   }
 }

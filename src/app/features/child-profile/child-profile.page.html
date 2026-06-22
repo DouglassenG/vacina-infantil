@@ -4,13 +4,63 @@
       <ion-back-button defaultHref="/dashboard"></ion-back-button>
     </ion-buttons>
     <ion-title>Perfil da Crianca</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleForm()">
+        <ion-icon [name]="showForm ? 'close' : 'add'" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <app-child-selector></app-child-selector>
 
-  <div *ngIf="selectedChild" class="profile-container">
+  <!-- Formulario de cadastro -->
+  <ion-card *ngIf="showForm" class="form-card">
+    <ion-card-header>
+      <ion-card-title>Nova Crianca</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Nome</ion-label>
+        <ion-input
+          [(ngModel)]="newChild.name"
+          placeholder="Nome da crianca"
+          type="text"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Data de Nascimento</ion-label>
+        <ion-input
+          [(ngModel)]="newChild.birthDate"
+          type="date"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Genero</ion-label>
+        <ion-select [(ngModel)]="newChild.gender" interface="popover">
+          <ion-select-option value="M">Masculino</ion-select-option>
+          <ion-select-option value="F">Feminino</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-button
+        expand="block"
+        color="success"
+        (click)="saveChild()"
+        [disabled]="!newChild.name || !newChild.birthDate || saving"
+        class="save-button"
+      >
+        <ion-spinner *ngIf="saving" name="crescent"></ion-spinner>
+        <span *ngIf="!saving">Salvar</span>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Perfil da crianca selecionada -->
+  <div *ngIf="selectedChild && !showForm" class="profile-container">
     <ion-card class="profile-card">
       <ion-card-content>
         <div class="avatar-section">

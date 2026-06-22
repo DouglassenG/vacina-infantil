@@ -49,6 +49,14 @@ export class VaccineHistoryPage implements OnInit, OnDestroy {
     this.subscriptions.push(dosesSub);
   }
 
+  async onMarkAsApplied(doseId: string): Promise<void> {
+    try {
+      await this.vaccineService.markAsApplied(doseId);
+    } catch (error) {
+      console.error('Erro ao marcar vacina:', error);
+    }
+  }
+
   private groupByAge(doses: VaccineDoseModule[]): AgeGroup[] {
     const groupMap = new Map<number, VaccineDoseModule[]>();
 

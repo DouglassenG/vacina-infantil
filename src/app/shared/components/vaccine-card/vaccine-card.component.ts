@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { VaccineDoseModule } from '../../../core/models/vaccine.model';
 
 @Component({
@@ -10,6 +10,9 @@ import { VaccineDoseModule } from '../../../core/models/vaccine.model';
 export class VaccineCardComponent {
 
   @Input() dose!: VaccineDoseModule;
+  @Output() markedAsApplied = new EventEmitter<string>();
+
+  applying = false;
 
   get statusColor(): string {
     switch (this.dose.status) {
@@ -27,5 +30,14 @@ export class VaccineCardComponent {
       case 'AGENDADA': return 'Agendada';
       default: return this.dose.status;
     }
+  }
+
+  get canMarkAsApplied(): boolean {
+    return this.dose.status !== 'CONCLUIDA';
+  }
+
+  onMarkAsApplied(): void {
+    this.applying = true;
+    this.markedAsApplied.emit(this.dose.id);
   }
 }

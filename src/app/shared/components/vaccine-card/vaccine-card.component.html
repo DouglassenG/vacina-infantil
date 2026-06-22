@@ -1,13 +1,28 @@
-<ion-card [class]="'status-' + dose.status.toLowerCase()">
+<ion-card>
   <ion-item lines="none">
     <ion-label>
       <h2><strong>{{ dose.vaccineName }}</strong></h2>
       <p>Etapa: {{ dose.doseType }}</p>
       <p>Recomendado: {{ dose.targetAgeMonths }} meses</p>
       <p *ngIf="dose.lotNumber">Lote: {{ dose.lotNumber }}</p>
+      <p *ngIf="dose.appliedDate">Aplicada: {{ dose.appliedDate | date:'dd/MM/yyyy' }}</p>
     </ion-label>
-    <ion-badge [color]="statusColor" slot="end">
-      {{ statusLabel }}
-    </ion-badge>
+    <div class="card-actions" slot="end">
+      <ion-badge [color]="statusColor">
+        {{ statusLabel }}
+      </ion-badge>
+      <ion-button
+        *ngIf="canMarkAsApplied"
+        size="small"
+        color="success"
+        fill="outline"
+        (click)="onMarkAsApplied()"
+        [disabled]="applying"
+        class="apply-btn"
+      >
+        <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+        Aplicar
+      </ion-button>
+    </div>
   </ion-item>
 </ion-card>

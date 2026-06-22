@@ -34,6 +34,7 @@
       <app-vaccine-card
         *ngFor="let dose of group.doses"
         [dose]="dose"
+        (markedAsApplied)="onMarkAsApplied($event)"
       ></app-vaccine-card>
     </div>
   </div>
