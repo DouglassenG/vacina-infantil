@@ -23,26 +23,36 @@ Seletor visual de criancas no topo da aplicacao com avatar e nome, utilizando es
 ## ✏️ CRUD Completo
 
 ### Cadastro de Crianca (Create)
-Formulario acessivel pelo botao + na tela de Perfil, com campos de nome, data de nascimento e genero. Dados salvos diretamente no Firebase Cloud Firestore.
+Formulario acessivel pelo botao + na tela de Perfil, com campos de nome, data de nascimento e genero. Dados salvos diretamente no Firebase Cloud Firestore com feedback via toast de sucesso.
 
 ### Visualizacao de Dados (Read)
-Leitura reativa de criancas, doses vacinais e campanhas via Observables do Firestore, com atualizacao em tempo real.
+Leitura reativa de criancas, doses vacinais e campanhas via Observables do Firestore, com atualizacao em tempo real e loading skeleton durante o carregamento.
 
 ### Edicao de Crianca (Update)
-Botao "Editar" no perfil da crianca que reabre o formulario preenchido com os dados atuais, permitindo alteracao de nome, data de nascimento e genero.
+Botao "Editar" no perfil da crianca que reabre o formulario preenchido com os dados atuais, permitindo alteracao de nome, data de nascimento e genero. Toast de confirmacao ao salvar.
 
 ### Exclusao de Crianca (Delete)
-Botao "Excluir" com confirmacao via alerta antes de remover o registro do Firestore.
+Botao "Excluir" com confirmacao via alerta antes de remover o registro do Firestore. Toast de feedback apos exclusao.
 
 ### Marcar Vacina como Aplicada (Update)
-Botao "Aplicar" em cada vaccine-card que registra a data de aplicacao no Firestore, atualizando o status automaticamente para "Concluida".
+Botao "Aplicar" em cada vaccine-card que registra a data de aplicacao no Firestore, atualizando o status automaticamente para "Concluida" com toast de confirmacao.
 
 ## ⏳ Loading Skeleton
-Esqueletos animados exibidos no dashboard e no historico vacinal enquanto os dados do Firestore carregam, garantindo uma experiencia visual fluida.
+Esqueletos animados exibidos no dashboard e no historico vacinal enquanto os dados do Firestore carregam, garantindo uma experiencia visual fluida sem tela vazia.
 
-## 🧪 Testes Unitarios
+## 🔍 Filtro por Status
+Barra de filtros interativa no historico vacinal com opcoes: Todas, Concluidas, Agendadas e Atrasadas. Filtragem instantanea com empty state quando nenhum resultado e encontrado.
 
-19 testes automatizados cobrindo toda a logica de negocio dos 3 models POO:
+## 💬 Toast de Feedback
+Notificacoes visuais em todas as acoes do CRUD: cadastro, edicao, exclusao de criancas e registro de vacinas aplicadas. Toasts com cores da paleta indicando sucesso ou erro.
+
+## 🎬 Animacoes de Transicao
+Transicoes suaves entre paginas habilitadas via IonicModule com modo Material Design. Efeitos de hover nos cards com transform e box-shadow para feedback visual interativo.
+
+## 🧪 Testes
+
+### Testes Unitarios (19 testes)
+Cobertura completa da logica de negocio dos 3 models POO com Karma e Jasmine:
 
 - **Child Model (6 testes):** criacao de instancia, calculo de idade em meses, formatacao de idade, avatar padrao
 - **VaccineDose Model (7 testes):** criacao de instancia, evaluateStatus (CONCLUIDA, ATRASADA, AGENDADA), conversao de datas
@@ -53,6 +63,20 @@ ng test --watch=false
 # Resultado: 19 of 19 SUCCESS
 ```
 
+### Testes E2E com Cypress (20 testes)
+Testes de ponta a ponta cobrindo fluxos completos do usuario:
+
+- **CRUD de Criancas (9 testes):** cadastro, leitura, edicao, exclusao com confirmacao, navegacao e seletor
+- **Historico Vacinal (6 testes):** listagem por faixa etaria, badges de status, filtros interativos, seletor de criancas
+- **Campanhas (5 testes):** listagem, badge de status ativa, banner no dashboard, detalhes com faixa etaria e periodo
+
+```bash
+npx cypress run
+# Resultado: 20 testes E2E
+```
+
+**Total: 39 testes automatizados**
+
 ## 🛠️ Tecnologias Utilizadas
 
 - **Ionic Framework v8** — Componentes UI e responsividade multiplataforma
@@ -62,7 +86,8 @@ ng test --watch=false
 - **Firebase Hosting** — Deploy e hospedagem em producao
 - **RxJS** — Reatividade e gerenciamento de estado
 - **SCSS** — Estilizacao com variaveis CSS customizadas
-- **Karma + Jasmine** — Framework de testes unitarios
+- **Karma + Jasmine** — Testes unitarios
+- **Cypress** — Testes E2E de ponta a ponta
 
 ## 🏗️ Arquitetura do Projeto
 
@@ -87,11 +112,19 @@ src/app/
 │       └── campaign-banner/
 ├── features/                # Paginas principais
 │   ├── dashboard/                 # Loading skeleton + contadores
-│   ├── child-profile/             # Formulario CRUD + perfil
-│   ├── vaccine-history/           # Historico por faixa etaria
-│   └── campaigns/                 # Listagem com status
+│   ├── child-profile/             # Formulario CRUD + toast + perfil
+│   ├── vaccine-history/           # Historico + filtro por status + toast
+│   └── campaigns/                 # Listagem com status e detalhes
 └── theme/
     └── variables.scss       # Paleta de cores obrigatoria
+
+cypress/
+├── e2e/
+│   ├── child-crud.cy.ts          # 9 testes CRUD
+│   ├── vaccine-history.cy.ts     # 6 testes historico
+│   └── campaigns.cy.ts           # 5 testes campanhas
+└── support/
+    └── e2e.ts                     # Comandos customizados Ionic
 ```
 
 ## 🎨 Paleta de Cores
@@ -120,6 +153,9 @@ ionic serve
 
 # Rodar testes unitarios
 ng test --watch=false
+
+# Rodar testes E2E (com ionic serve rodando em outro terminal)
+npx cypress run
 ```
 
 O aplicativo sera aberto automaticamente em `http://localhost:8100`.
@@ -130,7 +166,12 @@ O aplicativo sera aberto automaticamente em `http://localhost:8100`.
 - CRUD completo (Create, Read, Update, Delete) com persistencia no Firestore
 - Marcar vacina como aplicada com atualizacao em tempo real
 - 19 testes unitarios cobrindo toda logica de negocio dos models POO
+- 20 testes E2E com Cypress cobrindo fluxos completos do usuario
 - Loading skeleton animado durante carregamento de dados
+- Filtro interativo por status no historico vacinal (Todas/Concluidas/Agendadas/Atrasadas)
+- Toast de feedback em todas as acoes CRUD (sucesso e erro)
+- Animacoes de transicao entre paginas com Material Design
+- Favicon customizado com paleta do projeto
 - Deploy em producao via Firebase Hosting
 - Componentes reutilizaveis com tipagem estrita
 - Responsividade para Mobile (320px), Tablet e Desktop
