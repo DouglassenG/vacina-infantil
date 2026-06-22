@@ -7,6 +7,7 @@ export default defineConfig({
     specPattern: 'cypress/e2e/**/*.cy.ts',
     viewportWidth: 1280,
     viewportHeight: 720,
-    defaultCommandTimeout: 10000
+    defaultCommandTimeout: 10000,
+    includeShadowDom: true
   }
 });
