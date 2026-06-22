@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -15,7 +16,11 @@ import { environment } from '../environments/environment';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    BrowserAnimationsModule,
+    IonicModule.forRoot({
+      animated: true,
+      mode: 'md'
+    }),
     AppRoutingModule
   ],
   providers: [

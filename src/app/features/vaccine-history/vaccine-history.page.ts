@@ -4,6 +4,7 @@ import { Child } from '../../core/models/child.model';
 import { VaccineDoseModule } from '../../core/models/vaccine.model';
 import { ChildService } from '../../core/services/child.service';
 import { VaccineService } from '../../core/services/vaccine.service';
+import { ToastController } from '@ionic/angular';
 
 interface AgeGroup {
   label: string;
@@ -22,12 +23,16 @@ export class VaccineHistoryPage implements OnInit, OnDestroy {
   selectedChild: Child | null = null;
   ageGroups: AgeGroup[] = [];
   hasDelayed = false;
+  loading = true;
+  activeFilter: string = 'TODAS';
 
+  private allDoses: VaccineDoseModule[] = [];
   private subscriptions: Subscription[] = [];
 
   constructor(
     private childService: ChildService,
-    private vaccineService: VaccineService
+    private vaccineService: VaccineService,
+    private toastController: ToastController
   ) {}
 
   ngOnInit(): void {
@@ -41,19 +46,49 @@ export class VaccineHistoryPage implements OnInit, OnDestroy {
   }
 
   private loadDoses(childId: string, ageInMonths: number): void {
+    this.loading = true;
     const dosesSub = this.vaccineService.getDosesByChild(childId, ageInMonths)
       .subscribe(doses => {
+        this.allDoses = doses;
         this.hasDelayed = doses.some(d => d.status === 'ATRASADA');
-        this.ageGroups = this.groupByAge(doses);
+        this.applyFilter();
+        this.loading = false;
       });
     this.subscriptions.push(dosesSub);
+  }
+
+  setFilter(filter: string): void {
+    this.activeFilter = filter;
+    this.applyFilter();
+  }
+
+  private applyFilter(): void {
+    let filtered = this.allDoses;
+    if (this.activeFilter !== 'TODAS') {
+      filtered = this.allDoses.filter(d => d.status === this.activeFilter);
+    }
+    this.ageGroups = this.groupByAge(filtered);
   }
 
   async onMarkAsApplied(doseId: string): Promise<void> {
     try {
       await this.vaccineService.markAsApplied(doseId);
+      const toast = await this.toastController.create({
+        message: 'Vacina registrada como aplicada',
+        duration: 2500,
+        position: 'bottom',
+        color: 'success'
+      });
+      await toast.present();
     } catch (error) {
       console.error('Erro ao marcar vacina:', error);
+      const toast = await this.toastController.create({
+        message: 'Erro ao registrar vacina',
+        duration: 2500,
+        position: 'bottom',
+        color: 'danger'
+      });
+      await toast.present();
     }
   }
 

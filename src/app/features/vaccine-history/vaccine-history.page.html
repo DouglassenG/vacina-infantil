@@ -10,7 +10,18 @@
 <ion-content class="ion-padding">
   <app-child-selector></app-child-selector>
 
-  <div *ngIf="selectedChild">
+  <!-- Loading Skeleton -->
+  <div *ngIf="loading">
+    <ion-card *ngFor="let i of [1,2,3]" class="skeleton-card">
+      <ion-card-content>
+        <ion-skeleton-text [animated]="true" style="width: 60%; height: 20px;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 40%; height: 14px; margin-top: 8px;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="width: 50%; height: 14px; margin-top: 4px;"></ion-skeleton-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="selectedChild && !loading">
     <!-- Alerta de atraso -->
     <ion-card *ngIf="hasDelayed" color="danger" class="alert-card">
       <ion-card-content>
@@ -22,6 +33,38 @@
     <ion-list-header>
       <ion-label>Status Atual de {{ selectedChild.name }}</ion-label>
     </ion-list-header>
+
+    <!-- Filtro por status -->
+    <div class="filter-bar">
+      <ion-chip
+        [color]="activeFilter === 'TODAS' ? 'primary' : 'medium'"
+        [outline]="activeFilter !== 'TODAS'"
+        (click)="setFilter('TODAS')"
+      >
+        <ion-label>Todas</ion-label>
+      </ion-chip>
+      <ion-chip
+        [color]="activeFilter === 'CONCLUIDA' ? 'success' : 'medium'"
+        [outline]="activeFilter !== 'CONCLUIDA'"
+        (click)="setFilter('CONCLUIDA')"
+      >
+        <ion-label>Concluidas</ion-label>
+      </ion-chip>
+      <ion-chip
+        [color]="activeFilter === 'AGENDADA' ? 'warning' : 'medium'"
+        [outline]="activeFilter !== 'AGENDADA'"
+        (click)="setFilter('AGENDADA')"
+      >
+        <ion-label>Agendadas</ion-label>
+      </ion-chip>
+      <ion-chip
+        [color]="activeFilter === 'ATRASADA' ? 'danger' : 'medium'"
+        [outline]="activeFilter !== 'ATRASADA'"
+        (click)="setFilter('ATRASADA')"
+      >
+        <ion-label>Atrasadas</ion-label>
+      </ion-chip>
+    </div>
 
     <!-- Grupos por faixa etaria -->
     <div *ngFor="let group of ageGroups" class="age-group">
@@ -36,6 +79,12 @@
         [dose]="dose"
         (markedAsApplied)="onMarkAsApplied($event)"
       ></app-vaccine-card>
+    </div>
+
+    <!-- Empty state quando filtro nao tem resultados -->
+    <div *ngIf="ageGroups.length === 0" class="empty-state">
+      <ion-icon name="search-outline"></ion-icon>
+      <p>Nenhuma vacina encontrada para este filtro</p>
     </div>
   </div>
 </ion-content>

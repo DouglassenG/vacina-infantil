@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Child } from '../../core/models/child.model';
 import { ChildService } from '../../core/services/child.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   standalone: false,
@@ -28,7 +28,8 @@ export class ChildProfilePage implements OnInit, OnDestroy {
 
   constructor(
     private childService: ChildService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit(): void {
@@ -83,17 +84,20 @@ export class ChildProfilePage implements OnInit, OnDestroy {
           birthDate: new Date(this.formChild.birthDate),
           gender: this.formChild.gender
         });
+        await this.showToast('Crianca atualizada com sucesso', 'success');
       } else {
         await this.childService.addChild({
           name: this.formChild.name,
           birthDate: new Date(this.formChild.birthDate),
           gender: this.formChild.gender
         }, 'parent1');
+        await this.showToast('Crianca cadastrada com sucesso', 'success');
       }
 
       this.closeForm();
     } catch (error) {
       console.error('Erro ao salvar crianca:', error);
+      await this.showToast('Erro ao salvar crianca', 'danger');
     } finally {
       this.saving = false;
     }
@@ -127,15 +131,30 @@ export class ChildProfilePage implements OnInit, OnDestroy {
     if (!this.selectedChild?.id) return;
 
     try {
+      const name = this.selectedChild.name;
       await this.childService.deleteChild(this.selectedChild.id);
       this.selectedChild = null;
 
       if (this.children.length > 0) {
         this.childService.selectChild(this.children[0]);
       }
+
+      await this.showToast(`${name} foi removido(a) com sucesso`, 'warning');
     } catch (error) {
       console.error('Erro ao excluir crianca:', error);
+      await this.showToast('Erro ao excluir crianca', 'danger');
     }
+  }
+
+  private async showToast(message: string, color: string): Promise<void> {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2500,
+      position: 'bottom',
+      color,
+      cssClass: 'custom-toast'
+    });
+    await toast.present();
   }
 
   ngOnDestroy(): void {
